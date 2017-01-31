@@ -1,4 +1,4 @@
-import controlador.Controlador;
+import controlador.GestorHibernate;
 import controlador.SessionHelper;
 import entidades.EmpleadosEntity;
 import org.hibernate.Session;
@@ -8,14 +8,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Created by Galaterro on 31/01/2017.
+ * Created by Galaterro
  */
-public class Main {
+class Main {
 
     public static void main(final String[] args) throws Exception {
         boolean salir = false;
-        Session s = SessionHelper.getSessionFactory();
-        Controlador con = new Controlador(s);
+        Session s = SessionHelper.getSessionFactory().openSession();
+        GestorHibernate con = new GestorHibernate(s);
         int opcion = 0;
         do{
             System.out.println("****************************");
@@ -44,7 +44,7 @@ public class Main {
                         System.out.println("Escribe el telefono: ");
                         int telefono = Integer.parseInt(br.readLine());
                         EmpleadosEntity emple = new EmpleadosEntity(dni, nombre, telefono);
-                        con.insertarEmpleados(emple);
+                        con.insertarEmpleado(emple);
                     }catch(IOException ex){
                         System.out.println("Error al leer algun dato");
                     }

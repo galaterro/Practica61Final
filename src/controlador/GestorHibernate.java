@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 
@@ -18,16 +13,16 @@ import java.util.List;
 
 
 /**
- * Created by Galaterro on 31/01/2017.
+ * Created by Galaterro
  */
-public class Controlador {
+public class GestorHibernate {
     private final Session sesion;
 
-    public Controlador(Session sesion) {
+    public GestorHibernate(Session sesion) {
         this.sesion = sesion;
     }
     
-    public void insertarEmpleados(EmpleadosEntity emple){
+    public void insertarEmpleado(EmpleadosEntity emple){
         sesion.beginTransaction();
         sesion.save(emple);
         sesion.getTransaction().commit();
@@ -38,7 +33,7 @@ public class Controlador {
         sesion.beginTransaction();
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
-        EmpleadosEntity emple = (EmpleadosEntity)sesion.get(EmpleadosEntity.class, dni);
+        EmpleadosEntity emple = sesion.get(EmpleadosEntity.class, dni);
         switch(opcion){
             case "1":
                 if(emple != null){
@@ -76,7 +71,7 @@ public class Controlador {
 
     public void borrarEmpleado(short dni){
         sesion.beginTransaction();
-        EmpleadosEntity emple = (EmpleadosEntity) sesion.get(EmpleadosEntity.class,dni);
+        EmpleadosEntity emple = sesion.get(EmpleadosEntity.class,dni);
         if(emple != null){
             sesion.delete(emple);
             System.out.println("Empleado borrado con éxito");
@@ -90,7 +85,7 @@ public class Controlador {
         if(!dni_aux.toLowerCase().equals("todos")){
             short dni = Short.parseShort(dni_aux);
             sesion.beginTransaction();
-            EmpleadosEntity emple = (EmpleadosEntity)sesion.get(EmpleadosEntity.class, dni);
+            EmpleadosEntity emple = sesion.get(EmpleadosEntity.class, dni);
             sesion.getTransaction().commit();
             if(emple != null){
                 System.out.println("DNI: " + emple.getDni() + "\tNombre: " + emple.getNombre() + "\tTelefono: " + emple.getTelefono());
